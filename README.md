@@ -18,6 +18,7 @@ You'll see that the project is not pulling in data from the API... fix the API f
 
 The end goal is to have a list of influencers that are being pulled from the API and have a useable search/filter that can find influencers by their name, platform and the tags they have. 
 
-1. Connect up the search so that by typing in the searchbar you filter down the influencers (by handle, platform, and tags).
-2. Connect up the dropdown so that a specific platform can be selected and influencers are filtered accordingly. (we have included some commented out code that you can use if you would like)
-3. Extra points for any additional features you can add to make this a more useful project (hint. currently we are doing nothing with the influencers follower count). 
+1. Add the Influencers primary_tag to src/influencer/Card.js just and rename the "Tags" label "Secondary Tags" (within the FieldTitle component).
+2. Connect up the search so that by typing in the searchbar you filter down the influencers (by handle, platform, and tags).
+3. Connect up the dropdown so that a specific platform can be selected and influencers are filtered accordingly. (we have included some commented out code that you can use if you would like)
+4. Extra points for any additional features you can add to make this a more useful project (hint. currently we are doing nothing with the influencers follower count). 
