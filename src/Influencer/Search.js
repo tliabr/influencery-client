@@ -33,7 +33,7 @@ const InfluencerSearch = () => {
           onChange={(e) => setSearchString(e.target.value)
           } 
         />
-        {/* <SelectInput
+        <SelectInput
           value={platformString}
           onChange={(e) => setPlatformString(e.target.value)}
           name="platforms"
@@ -43,29 +43,47 @@ const InfluencerSearch = () => {
           <option value="instagram">Instagram</option>
           <option value="twitter">Twitter</option>
           <option value="facebook">Facebook</option>
-          <option value="tiktok">Tik-Tok</option>
           <option value="youtube">Youtube</option>
-        </SelectInput> */}
+        </SelectInput>
       </SearchInputContainer>
       <SearchContainer>
         {!influencers && <Loader />}
         <div>
           {influencers?.filter((val) => {
-            if (searchString == "") {
+            if (platformString === 'all') {
               return true;
-            } else if (val.handle.toLowerCase().includes(searchString.toLowerCase())) {
-              return true;
-            } else if (val.platform.name.toLowerCase().includes(searchString.toLowerCase())) {
-              return true;
-            } else {
-              const tags = val.tags;
-              const isStringInTags = tags.length
-                && tags.some(tag => tag.name.toLowerCase().includes(searchString.toLowerCase()));
-              return isStringInTags;
+            } else if (platformString === 'instagram') {
+              return val.platform.name.includes('instagram');
+            } else if (platformString === 'twitter') {
+              return val.platform.name.includes('twitter');
+            } else if (platformString === 'facebook') {
+              return val.platform.name.includes('facebook');
+            } else if (platformString === 'youtube') {
+              return val.platform.name.includes('youtube');
             }
-          }).map((inf, i) => (
-            <InfluencerCard influencer={inf} key={"inf_card_" + i} />
-          ))}
+          })
+            .filter((val) => {
+              const searchLowerCase = searchString.toLowerCase();
+
+              if (searchString === "") {
+                return true;
+              } else if (val.handle.toLowerCase().includes(searchLowerCase)) {
+                return true;
+              } else if (val.platform.name.toLowerCase().includes(searchLowerCase)) {
+                return true;
+              // to prioritize primary tag
+              } else if (val.primary_tag.name.toLowerCase().includes(searchLowerCase)) {
+                return true;
+              } else {
+                const tags = val.tags;
+                const isStringInTags = tags.length
+                  && tags.some(tag => tag.name.toLowerCase().includes(searchLowerCase));
+                return isStringInTags;
+              }
+            })
+            .map((inf, i) => (
+              <InfluencerCard influencer={inf} key={"inf_card_" + i} />
+            ))}
         </div>
       </SearchContainer>
     </div>
