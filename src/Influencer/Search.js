@@ -5,7 +5,7 @@ import styled from "styled-components";
 const InfluencerSearch = () => {
   const [influencers, setInfluencers] = useState(null);
   const [searchString, setSearchString] = useState("");
-  // const [platformString, setPlatformString] = useState("all");
+  const [platformString, setPlatformString] = useState("all");
 
   useEffect(() => {
     getInfluencers();
@@ -19,7 +19,9 @@ const InfluencerSearch = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setInfluencers(data));
+      .then((data) => {
+        console.log(data);
+        setInfluencers(data)});
 
   return (
     <div>
@@ -28,7 +30,8 @@ const InfluencerSearch = () => {
           placeholder="Enter influencer handle, platform, or tag"
           type="text"
           value={searchString}
-          onChange={(e) => setSearchString(e.target.value)}
+          onChange={(e) => setSearchString(e.target.value)
+          } 
         />
         {/* <SelectInput
           value={platformString}
@@ -47,7 +50,20 @@ const InfluencerSearch = () => {
       <SearchContainer>
         {!influencers && <Loader />}
         <div>
-          {influencers?.map((inf, i) => (
+          {influencers?.filter((val) => {
+            if (searchString == "") {
+              return true;
+            } else if (val.handle.toLowerCase().includes(searchString.toLowerCase())) {
+              return true;
+            } else if (val.platform.name.toLowerCase().includes(searchString.toLowerCase())) {
+              return true;
+            } else {
+              const tags = val.tags;
+              const isStringInTags = tags.length
+                && tags.some(tag => tag.name.toLowerCase().includes(searchString.toLowerCase()));
+              return isStringInTags;
+            }
+          }).map((inf, i) => (
             <InfluencerCard influencer={inf} key={"inf_card_" + i} />
           ))}
         </div>
