@@ -18,7 +18,7 @@ const InfluencerCard = ({ influencer }) => {
         <FieldTitle>Handle</FieldTitle>
         <CardFields>{influencer?.handle}</CardFields>
         <FieldTitle>Primary Tag</FieldTitle>
-        <TagContainer><Tag>{influencer?.primary_tag_id}</Tag></TagContainer>
+        <TagContainer><Tag>{influencer?.primary_tag.name}</Tag></TagContainer>
         <FieldTitle>Secondary Tags</FieldTitle>
         <TagContainer>
           {influencer?.tags.map((tag) => (
